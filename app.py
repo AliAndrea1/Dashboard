@@ -223,7 +223,7 @@ def teste_t_independente(grupo1, grupo2, teste_unilateral=True):
 # Sidebar para navegação - Design mais limpo
 st.sidebar.markdown("""
 <div style='text-align: center; padding: 1rem; color: white;'>
-    <h2 style='color: #F3DCF3; margin-bottom: 2rem;'>📊 Dashboard</h2>
+    <h2 style='color: #F3DCF3; margin-bottom: 2rem;'>Dashboard</h2>
 </div>
 """, unsafe_allow_html=True)
 
