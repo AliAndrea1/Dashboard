@@ -1,0 +1,8 @@
+steamlit
+pandas
+plotly
+numpy
+seaborn 
+matplotlib
+openpyxl
+statsmodels 
