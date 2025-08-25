@@ -223,18 +223,18 @@ def teste_t_independente(grupo1, grupo2, teste_unilateral=True):
 # Sidebar para navegação - Design mais limpo
 st.sidebar.markdown("""
 <div style='text-align: center; padding: 1rem; color: white;'>
-    <h2 style='color: #F3DCF3; margin-bottom: 2rem;'>Dashboard</h2>
+    <h2 style='color: #F3DCF3; margin-bottom: 2rem;'>📊 Dashboard</h2>
 </div>
 """, unsafe_allow_html=True)
 
 page = st.sidebar.selectbox(
     "Navegação:",
-    ["🏠 Início", "🎓 Perfil Profissional", "💻 Competências", "📈 Análise de Dados"],
+    ["👩‍💻 Início", "🎓 Perfil Profissional", "💻 Competências", "📈 Análise de Dados"],
     index=0
 )
 
 # Página Home - Design mais moderno
-if page == "🏠 Início":
+if page == "👩‍💻 Início":
     # Título principal mais elegante (sem opção de aumentar)
     st.markdown('<div class="main-header">Dashboard Profissional</div>', unsafe_allow_html=True)
     
@@ -380,7 +380,7 @@ elif page == "💻 Competências":
                 </div>
             </div>
             """, unsafe_allow_html=True)
-    
+
     st.markdown('<div class="section-header">Ferramentas e Tecnologias</div>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
@@ -458,7 +458,6 @@ elif page == "💻 Competências":
         """, unsafe_allow_html=True)
 
 # Página Análise de Dados - Mantida com melhorias visuais
-# ... (código anterior permanece igual)
 
 elif page == "📈 Análise de Dados":
     st.markdown('<div class="main-header">Análise de Dados: Vendas E-commerce</div>', unsafe_allow_html=True)
@@ -514,16 +513,31 @@ elif page == "📈 Análise de Dados":
         
         # Dicionário para personalizar as descrições das variáveis
         informacoes_colunas = {
-            "Index": "Inteiro, provavelmente um índice sequencial",
-            "Qty": "Inteir, quantidade de itens no pedido",
+            "index": "Inteiro, índice sequencial",
+            "Qty": "Inteiro, quantidade de itens no pedido",
             "Valor_Pedido": "Float, valor do pedido",
-            "CEP_Destino": "Float, CEP de destino (pode ser tratado como categórico se não for usado para cálculos numéricos)",
+            "CEP_Destino": "Float, CEP de destino",
+            "Unnamed: 22": "Float, coluna com muitos valores nulos",
             "Valor_Pedido_BRL": "Float, valor do pedido em BRL",
+            "ID_Pedido": "String, identificador único do pedido",
             "Data_Pedido": "Data, data do pedido",
-            "Categoria": "Texto, categoria do produto",
-            "Status_Pedido": "Texto, status atual do pedido",
+            "Categoria": "String, categoria do produto",
+            "Status_Pedido": "String, status atual do pedido",
+            "Tipo_Envio": "String, tipo de envio",
+            "Sales Channel": "String, canal de vendas",
+            "Nivel_Entrega": "String, nível de entrega",
+            "Estilo": "String, estilo do produto",
+            "Codigo_Produto": "String, código do produto.",
+            "Size":"String, tamanho do produto",
+            "ASIN":"String, ASIN do produto",
+            "Courier Status":"String, status do entregador",
+            "Moeda":"String, moeda do pedido",
+            "Cidade_Destino":"String, cidade de destino",
+            "Estado_Destino":"String, estado de destino",
+            "Pais_Destino":"String, país de destino",
+            "Responsavel_Envio":"String, responsável pelo envio ",
             "Venda_B2B": "Booleano, indica se é venda B2B",
-            "IDs_Promocao": "Texto, IDs das promoções aplicadas",
+            "IDs_Promocao": "String, IDs das promoções aplicadas",
             "Tem_Promocao": "Booleano, indica se tem promoção"
         }
         
@@ -547,22 +561,22 @@ elif page == "📈 Análise de Dados":
             <h4>📝 Variáveis Categóricas</h4>
             """, unsafe_allow_html=True)
             categorical_cols = df.select_dtypes(include=['object', 'bool']).columns.tolist()
-            for col in categorical_cols[:10]:
-                descricao = informacoes_colunas.get(col, f"{df[col].dtype} - Sem descrição personalizada")
-                st.write(f"• **{col}**: {descricao}")
+            for col in categorical_cols[:26]:
+                descricao = informacoes_colunas.get(col, f"{df[col].dtype} string, status atual do pedido")
+                st.write(f"• {col}: {descricao}")
             st.markdown("</div>", unsafe_allow_html=True)
         
         # Perguntas de análise
         st.markdown("""
         <div class="highlight-box">
-        <h4>🎯 Perguntas de Análise</h4>
+        <h4>⁉️ Perguntas de Análise</h4>
         <ol>
         <li><strong>Quais são os produtos mais vendidos e quais geram mais receita?</strong></li>
         <li><strong>Como estão distribuídos os valores dos pedidos?</strong></li>
         <li><strong>Qual a porcentagem de status dos pedidos?</strong></li>
+        <li><strong>Qual o valor médio real de um pedido nesta plataforma?</strong></li>
         <li><strong>Os pedidos B2B possuem valores médios maiores do que os pedidos B2C?</strong> (Teste de Hipótese)</li>
-        <li><strong>Qual o valor médio real de um pedido nesta plataforma?</strong> (Intervalo de Confiança)</li>
-        <li><strong>Promoções realmente aumentam o valor médio dos pedidos?</strong> (Teste de Hipótese)</li>
+        <li><strong>Promoções realmente aumentam o valor médio dos pedidos?</strong></li>
         </ol>
         </div>
         """, unsafe_allow_html=True)
@@ -591,7 +605,7 @@ elif page == "📈 Análise de Dados":
         with col2:
             st.markdown("""
             <div class="warning-box">
-            <h4>📊 Medidas de Dispersão</h4>
+            <h4 style="color: black;">📊 Medidas de Dispersão</h4>
             """, unsafe_allow_html=True)
             st.metric("Desvio Padrão", f"R$ {stats_pedidos['std']:.2f}")
             st.metric("Variância", f"R$ {stats_pedidos['var']:.2f}")
@@ -634,7 +648,7 @@ elif page == "📈 Análise de Dados":
                 nbins=50,
                 title="Distribuição dos Valores dos Pedidos",
                 labels={'value': 'Valor do Pedido (R$)', 'count': 'Frequência'},
-                color_discrete_sequence=['#3498db']
+                color_discrete_sequence=['#F3DCF3']
             )
             fig_hist.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
@@ -648,7 +662,7 @@ elif page == "📈 Análise de Dados":
                 y=valores_pedidos,
                 title="Boxplot dos Valores dos Pedidos",
                 labels={'y': 'Valor do Pedido (R$)'},
-                color_discrete_sequence=['#e74c3c']
+                color_discrete_sequence=["#593A61"]
             )
             fig_box.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
@@ -670,7 +684,7 @@ elif page == "📈 Análise de Dados":
                 orientation='h',
                 title="Top 10 Produtos Mais Vendidos",
                 labels={'x': 'Quantidade de Vendas', 'y': 'Categoria'},
-                color_discrete_sequence=['#2ecc71']
+                color_discrete_sequence=['#F3DCF3']
             )
             fig_vendidos.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
@@ -687,7 +701,7 @@ elif page == "📈 Análise de Dados":
                 orientation='h',
                 title="Top 10 Categorias por Receita",
                 labels={'x': 'Receita Total (R$)', 'y': 'Categoria'},
-                color_discrete_sequence=['#9b59b6']
+                color_discrete_sequence=['#593A61']
             )
             fig_receita.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
@@ -726,13 +740,16 @@ elif page == "📈 Análise de Dados":
             <div class="success-box">
             <h4>📊 Intervalo de Confiança (95%)</h4>
             <p><strong>Média amostral:</strong> R$ {ic_resultado['media']:.2f}</p>
-            <p><strong>Intervalo:</strong> [R$ {ic_resultado['ic_inferior']:.2f} ; R$ {ic_resultado['ic_superior']:.2f}]</p>
+            <p><strong>Intervalo:</strong> R$ {ic_resultado['ic_inferior']:.2f} ; R$ {ic_resultado['ic_superior']:.2f}</p>
             <p><strong>Margem de erro:</strong> R$ {ic_resultado['margem_erro']:.2f}</p>
             </div>
             """, unsafe_allow_html=True)
             
             st.write("**Interpretação:**")
-            st.write(f"Com 95% de confiança, o valor médio real dos pedidos na plataforma está entre R$ {ic_resultado['ic_inferior']:.2f} e R$ {ic_resultado['ic_superior']:.2f}")
+            st.write(f"Com 95% de confiança, o valor médio real dos pedidos na plataforma está entre {ic_resultado['ic_inferior']:.2f} e {ic_resultado['ic_superior']:.2f} reais")
+
+            st.write("**Justificativa:**")
+            st.write("O objetivo é estimar a média populacional do Valor_Pedido_BRL com um nível de confiança de %. Isso nos permite ter uma faixa de valores dentro da qual a verdadeira média populacional provavelmente se encontra.")
         
         with col2:
             # Visualização do IC
@@ -788,7 +805,7 @@ elif page == "📈 Análise de Dados":
                 <h4>✅ Resultado: SIGNIFICATIVO</h4>
                 <p><strong>Estatística t:</strong> {teste_b2b['t_stat']:.4f}</p>
                 <p><strong>P-valor:</strong> {teste_b2b['p_unilateral']:.4f}</p>
-                <p><strong>Conclusão:</strong> Rejeitamos H₀. Há evidência estatística de que pedidos B2B têm valor médio maior que B2C.</p>
+                <p><strong>Justificativa:</strong> Rejeitamos H₀. Há evidência estatística de que pedidos B2B têm valor médio maior que B2C.</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
@@ -797,7 +814,7 @@ elif page == "📈 Análise de Dados":
                 <h4>❌ Resultado: NÃO SIGNIFICATIVO</h4>
                 <p><strong>Estatística t:</strong> {teste_b2b['t_stat']:.4f}</p>
                 <p><strong>P-valor:</strong> {teste_b2b['p_unilateral']:.4f}</p>
-                <p><strong>Conclusão:</strong> Não rejeitamos H₀. Não há evidência suficiente de diferença.</p>
+                <p><strong>Justificativa:</strong> Não rejeitamos H₀. Não há evidência suficiente de diferença.</p>
                 </div>
                 """, unsafe_allow_html=True)
         
@@ -811,7 +828,7 @@ elif page == "📈 Análise de Dados":
                 title="Comparação B2B vs B2C",
                 labels={'Venda_B2B': 'Tipo de Venda', 'Valor_Pedido_BRL': 'Valor do Pedido (R$)'},
                 color='Venda_B2B',
-                color_discrete_sequence=['#3498db', '#e74c3c']
+                color_discrete_sequence=['#e74c3c', '#3498db']
             )
             fig_b2b.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
@@ -820,7 +837,7 @@ elif page == "📈 Análise de Dados":
             st.plotly_chart(fig_b2b, use_container_width=True)
         
         # 3.3 Teste de Hipótese: Promoções
-        st.write("### 🎁 Teste de Hipótese: Promoções vs Sem Promoções")
+        st.write("### 🛍️ Teste de Hipótese: Promoções vs Sem Promoções")
         
         # Separar dados
         sem_promo = df[df['Tem_Promocao'] == False]['Valor_Pedido_BRL'].dropna()
@@ -851,7 +868,7 @@ elif page == "📈 Análise de Dados":
                 <h4>✅ Resultado: SIGNIFICATIVO</h4>
                 <p><strong>Estatística t:</strong> {teste_promo['t_stat']:.4f}</p>
                 <p><strong>P-valor:</strong> {teste_promo['p_unilateral']:.4f}</p>
-                <p><strong>Conclusão:</strong> Rejeitamos H₀. Há evidência estatística de que promoções aumentam o valor médio dos pedidos.</p>
+                <p><strong>Justificativa:</strong> Rejeitamos H₀. Há evidência estatística de que promoções aumentam o valor médio dos pedidos.</p>
                 </div>
                 """, unsafe_allow_html=True)
             else:
@@ -874,7 +891,7 @@ elif page == "📈 Análise de Dados":
                 title="Comparação: Com vs Sem Promoção",
                 labels={'Tem_Promocao': 'Tem Promoção', 'Valor_Pedido_BRL': 'Valor do Pedido (R$)'},
                 color='Tem_Promocao',
-                color_discrete_sequence=['#f39c12', '#27ae60']
+                color_discrete_sequence=['#e74c3c', '#3498db']
             )
             fig_promo.update_layout(
                 plot_bgcolor='rgba(0,0,0,0)',
@@ -910,6 +927,6 @@ st.markdown("---")
 st.markdown("""
 <div style='text-align: center; color: #7f8c8d; padding: 2rem;'>
     <p style='font-size: 1.1rem; margin-bottom: 0.5rem;'>Dashboard desenvolvido para CP1 - Análise de Dados | 2025</p>
-    <p style='font-size: 0.9rem;'>Demonstração completa de análise estatística aplicada a dados reais de e-commerce</p>
+    <p style='font-size: 0.9rem;'>Demonstração de análise estatística aplicada a dados reais de e-commerce</p>
 </div>
 """, unsafe_allow_html=True)
