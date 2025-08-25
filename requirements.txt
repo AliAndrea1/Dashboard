@@ -1,8 +1,9 @@
-steamlit
+streamlit
 pandas
 plotly
 numpy
 seaborn 
 matplotlib
 openpyxl
+
 statsmodels 
